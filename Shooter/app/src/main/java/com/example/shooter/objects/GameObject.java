@@ -26,6 +26,6 @@ public abstract class GameObject {
     }
 
     public Rect getBounds(){
-        return new Rect((int)x, (int)y, width, height);
+        return new Rect((int)x, (int)y, (int)x+width, (int)y+height);
     }
 }

@@ -20,16 +20,16 @@ public abstract class Players extends GameObject {
     }
 
     public Rect getUpBounds(){
-        return new Rect((int)((x+width/2)-(width/4)), (int)y,width/2, height/2);
+        return new Rect((int)((x+width/2)-(width/4)), (int)y,(int)((x+width/2)-(width/4))+width/2, (int)y+height/2);
     }
     public Rect getRightBounds(){
-        return new Rect((int)(x+width-5), (int)y + 5,5, height-10);
+        return new Rect((int)(x+width-5), (int)y + 5,(int)(x+width-5)+5, (int)y + 5 + height-10);
     }
     public Rect getDownBounds(){
-        return new Rect((int)((x+width/2)-(width/4)), (int)(y + height/2),width/2, height/2+1);
+        return new Rect((int)((x+width/2)-(width/4)), (int)(y + height/2),(int)((x+width/2)-(width/4))+width/2, (int)(y + height/2)+height/2+1);
     }
     public Rect getLeftBounds(){
-        return new Rect((int)x, (int)y + 5,5, height-10);
+        return new Rect((int)x, (int)y + 5,(int)x+5, (int)y + 5+height-10);
     }
 
     public float getxVel() {

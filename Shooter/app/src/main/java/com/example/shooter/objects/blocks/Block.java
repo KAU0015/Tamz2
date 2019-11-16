@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.example.shooter.R;
@@ -25,6 +27,11 @@ public class Block extends GameObject {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), null);
+       /* Paint p = new Paint();
+        p.setColor(Color.GREEN);
+        p.setStrokeWidth(1);
+        p.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(getBounds(), p);*/
     }
 
 }

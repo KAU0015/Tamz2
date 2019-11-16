@@ -1,9 +1,16 @@
 package com.example.shooter.objects.players.player;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 
+import com.example.shooter.R;
 import com.example.shooter.objects.GameObject;
+import com.example.shooter.objects.blocks.Block;
 import com.example.shooter.objects.players.Players;
 
 public class Player extends Players {
@@ -13,7 +20,7 @@ public class Player extends Players {
     private final float maxSpeed = 8;
     private Bitmap imageIdleRight;
     private Bitmap imageIdleLeft;
-    //private PlayerAnimation animation;
+    private PlayerAnimation animation;
     private boolean fire = false;
    // private List<Shoot> shoots;
     private int speedFire = 8;
@@ -21,19 +28,21 @@ public class Player extends Players {
     private boolean nearExit = false;
 
 
-    public Player(float x, float y){
+    public Player(Context context, float x, float y){
         this.life = 100;
         this.x = x;
         this.y = y;
         this.xVel = 0;
         this.yVel = 0;
-        this.width = 40;
-        this.height = 60;
-        /*this.animation = new PlayerAnimation();
-        this.shoots = new ArrayList<Shoot>();*/
 
-      //  this.imageIdleRight = new Image(this.getClass().getResourceAsStream("/textures/objects/player/soldierIdle1.png"));
-       // this.imageIdleLeft = new Image(this.getClass().getResourceAsStream("/textures/objects/player/soldierIdleLeft.png"));
+        this.animation = new PlayerAnimation(context);
+      //  this.shoots = new ArrayList<Shoot>();
+
+        this.imageIdleRight = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_idle_right);
+        this.imageIdleLeft = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_idle_left);
+
+        this.width = imageIdleRight.getWidth();
+        this.height = imageIdleRight.getHeight();
     }
 
     public boolean isNearExit() {
@@ -49,28 +58,30 @@ public class Player extends Players {
     }
 
     public void draw(Canvas canvas){
-      /*  g.setColor(Color.CYAN);
-        g.fillRect((int)x, (int)y, width, height);*/
 
-      /*  if(xVel != 0 && !jumping && yVel == 0){
-            //animation.drawAnimation(gc, (int)x, (int)y);
+        if(xVel != 0 && !jumping && yVel == 0){
+            animation.drawAnimation(canvas, (int)x, (int)y);
         }
         else if(toRight){
-            gc.drawImage(imageIdleRight, (int)x, (int)y);
+            canvas.drawBitmap(imageIdleRight, null, new Rect((int)x, (int)y, (int)(x+imageIdleRight.getWidth()), (int)(y+imageIdleRight.getHeight())), null);
         }
         else if(!toRight){
-            gc.drawImage(imageIdleLeft, (int)x, (int)y);
-        }*/
+            canvas.drawBitmap(imageIdleLeft, null, new Rect((int)x, (int)y, (int)(x+imageIdleLeft.getWidth()), (int)(y+imageIdleLeft.getHeight())), null);
+        }
 
         /*for(Shoot s : shoots){
             s.render(gc);
         }*/
 
-       /* g.setColor(Color.red);
-        ((Graphics2D) g).draw(getDownBounds());
-        ((Graphics2D) g).draw(getUpBounds());
-        ((Graphics2D) g).draw(getLeftBounds());
-        ((Graphics2D) g).draw(getRightBounds());*/
+       /* Paint p = new Paint();
+        p.setColor(Color.GREEN);
+        p.setStrokeWidth(1);
+        p.setStyle(Paint.Style.STROKE);
+        canvas.drawRect(getLeftBounds(), p);
+        canvas.drawRect(getRightBounds(), p);
+        canvas.drawRect(getDownBounds(), p);
+        canvas.drawRect(getUpBounds(), p);*/
+        //canvas.drawRect(getBounds(), p);
 
     }
 
@@ -107,12 +118,12 @@ public class Player extends Players {
             }
         }
 
-       /* if(xVel > 0)
+        if(xVel > 0)
             animation.runAnimationR();
         else if(xVel < 0)
             animation.runAnimationL();
 
-        if(PlayerUI.getInstance().getAmmo() > 0){
+      /*  if(PlayerUI.getInstance().getAmmo() > 0){
             if(fire){
                 firing++;
 
@@ -140,14 +151,16 @@ public class Player extends Players {
     public void checkCollision(GameObject ob) {
 
         // nearExit = false;
-
-       /* if(!(ob instanceof Players) && !(ob instanceof Packs) && !(ob instanceof Exit)){
-            if(getUpBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
+        if(!(ob instanceof Players)/* && !(ob instanceof Packs) && !(ob instanceof Exit)*/){
+            if(getUpBounds().intersect(ob.getBounds())){
                 y = ob.getY() + ob.getHeight()+1;
                 yVel = 0;
                 falling = true;
             }
-            if(getDownBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
+
+
+
+            if(getDownBounds().intersect(ob.getBounds())){
                 y = ob.getY() - height;
                 yVel = 0;
                 jumping = false;
@@ -156,22 +169,22 @@ public class Player extends Players {
             else {
                 falling = true;
             }
-            if(getRightBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
+            if(getRightBounds().intersect(ob.getBounds())){
                 x = ob.getX() - width;
                 // xVel = 0;
             }
-            if(getLeftBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
+            if(getLeftBounds().intersect(ob.getBounds())){
                 x = ob.getX() + ob.getWidth();
                 // xVel = 0;
             }
 
         }
 
-        if(ob instanceof Exit && getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
+       /* if(ob instanceof Exit && getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
             nearExit = true;
-        }
+        }*/
 
-        if(ob instanceof Packs){
+        /*if(ob instanceof Packs){
             if(ob instanceof AmmoPack){
                 if(getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
                     PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
@@ -192,7 +205,7 @@ public class Player extends Players {
         }
 
 
-        for(int i = 0; i < shoots.size(); i++){
+        /*for(int i = 0; i < shoots.size(); i++){
             shoots.get(i).checkCollision(ob);
             if(shoots.get(i).isCol()){
                 shoots.remove(i);

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -13,7 +14,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gameView = new GameView(this);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        gameView = new GameView(this, width, height);
         setContentView(gameView);
 
     }
