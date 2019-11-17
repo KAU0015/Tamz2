@@ -24,6 +24,7 @@ public class GameView extends SurfaceView implements Runnable {
     private ArrayList<Block> blocks;
     private GameObjectContainer container = null;
     private Camera camera = null;
+    private int fps = 0;
 
     private Paint paint;
     private Canvas canvas;
@@ -63,12 +64,100 @@ public class GameView extends SurfaceView implements Runnable {
             row++;
         }
 
+      /*  long startTime;
+        long timeMillis;
+        long waitTime;
+        long totalTime = 0;
+        int frameCount = 0;
+        long targetTime = 1000 / 80;
+        long averageFPS;
 
         while (playing) {
+            startTime = System.nanoTime();
+            canvas = null;
+
+            try {
+                canvas = this.surfaceHolder.lockCanvas();
+                synchronized(surfaceHolder) {
+                    update();
+                    invalidate();
+                }
+            } catch (Exception e) {       }
+            finally {
+                if (canvas != null)            {
+                    try {
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            timeMillis = (System.nanoTime() - startTime) / 1000000;
+            waitTime = targetTime - timeMillis;
+
+            try {
+                gameThread.sleep(waitTime);
+            } catch (Exception e) {}
+
+            totalTime += System.nanoTime() - startTime;
+            frameCount++;
+            if (frameCount == 80)        {
+                averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
+                frameCount = 0;
+                totalTime = 0;
+                System.out.println(averageFPS);
+            }
+        }*/
+
+        long now;
+        long updateTime;
+        long wait;
+
+        final int TARGET_FPS = 60;
+        final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+
+        while (playing) {
+            now = System.nanoTime();
+
             update();
-            draw();
-            control();
+           invalidate();
+
+            updateTime = System.nanoTime() - now;
+            wait = (OPTIMAL_TIME - updateTime) / 1000000;
+
+            try {
+                Thread.sleep(wait);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
         }
+
+
+      /*  while (playing) {
+
+            fps++;
+
+            if(fps == 60){
+                System.out.println(fps);
+                update();
+                //draw();
+                invalidate();
+                fps = 0;
+
+            }
+
+
+        }*/
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        setWillNotDraw(false);
     }
 
     private void update() {
@@ -77,7 +166,7 @@ public class GameView extends SurfaceView implements Runnable {
         container.checkObjectCollision();
     }
 
-    private void draw() {
+   /* private void draw() {
         if (surfaceHolder.getSurface().isValid()) {
             //locking the canvas
             canvas = surfaceHolder.lockCanvas();
@@ -91,15 +180,7 @@ public class GameView extends SurfaceView implements Runnable {
             //Unlocking the canvas
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
-    }
-
-    private void control() {
-        try {
-            gameThread.sleep(17);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+    }*/
 
     public void pause() {
         playing = false;
@@ -113,6 +194,15 @@ public class GameView extends SurfaceView implements Runnable {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        canvas.drawColor(Color.BLACK);
+        canvas.translate(camera.getX(), camera.getY());
+        container.drawObject(canvas);
+        canvas.translate(-camera.getX(), -camera.getY());
     }
 
     @Override

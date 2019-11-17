@@ -27,6 +27,7 @@ public class Block extends GameObject {
     @Override
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), null);
+       // System.out.println(canvas.isHardwareAccelerated());
        /* Paint p = new Paint();
         p.setColor(Color.GREEN);
         p.setStrokeWidth(1);
