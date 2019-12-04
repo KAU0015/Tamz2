@@ -13,6 +13,10 @@ import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.blocks.Block;
 import com.example.shooter.objects.players.Players;
+import com.example.shooter.objects.shoots.Shoot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Players {
     private float gravity = 0.4f;
@@ -23,7 +27,7 @@ public class Player extends Players {
     private Bitmap imageIdleLeft;
     private PlayerAnimation animation;
     private boolean fire = false;
-   // private List<Shoot> shoots;
+    private List<Shoot> shoots;
     private int speedFire = 8;
     private int firing = 0;
     private boolean nearExit = false;
@@ -37,7 +41,7 @@ public class Player extends Players {
         this.yVel = 0;
 
         this.animation = new PlayerAnimation(context);
-      //  this.shoots = new ArrayList<Shoot>();
+        this.shoots = new ArrayList<Shoot>();
         TextureLoader textureLoader = TextureLoader.getInstance();
         this.imageIdleRight = textureLoader.getTexture(1);
         this.imageIdleLeft = textureLoader.getTexture(2);
@@ -70,9 +74,9 @@ public class Player extends Players {
             canvas.drawBitmap(imageIdleLeft, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), null);
         }
 
-        /*for(Shoot s : shoots){
-            s.render(gc);
-        }*/
+        for(Shoot s : shoots){
+            s.draw(canvas);
+        }
 
        /* Paint p = new Paint();
         p.setColor(Color.GREEN);
@@ -124,28 +128,28 @@ public class Player extends Players {
         else if(xVel < 0)
             animation.runAnimationL();
 
-      /*  if(PlayerUI.getInstance().getAmmo() > 0){
+      /*  if(PlayerUI.getInstance().getAmmo() > 0){*/
             if(fire){
                 firing++;
 
                 if(firing > speedFire){
                     firing = 0;
                     if(toRight){
-                        shoots.add(new Shoot(x+width-9, y+38, toRight));
-                        PlayerUI.getInstance().setAmmo(-1);
+                        shoots.add(new Shoot(x+width-9, y+(height/3)*2-4, toRight));
+                       // PlayerUI.getInstance().setAmmo(-1);
 
                     }
                     else{
-                        shoots.add(new Shoot(x-7, y+38, toRight));
-                        PlayerUI.getInstance().setAmmo(-1);
+                        shoots.add(new Shoot(x-7, y+(height/3)*2-4, toRight));
+                      //  PlayerUI.getInstance().setAmmo(-1);
                     }
                 }
             }
-        }
+       /* }*/
 
         for(Shoot s : shoots){
             s.move();
-        }*/
+        }
     }
 
     @Override
@@ -203,15 +207,15 @@ public class Player extends Players {
                 }
             }
 
-        }
+        }*/
 
 
-        /*for(int i = 0; i < shoots.size(); i++){
+        for(int i = 0; i < shoots.size(); i++){
             shoots.get(i).checkCollision(ob);
             if(shoots.get(i).isCol()){
                 shoots.remove(i);
             }
-        }*/
+        }
     }
 
     public boolean isFire() {

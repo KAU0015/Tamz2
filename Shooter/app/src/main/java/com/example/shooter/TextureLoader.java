@@ -39,6 +39,8 @@ public class TextureLoader {
         textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left1));
         textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left0));
         textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left1));
+        textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.shoot_left));
+        textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.shoot_right));
     }
 
     public Bitmap getTexture(int i){

@@ -18,16 +18,10 @@ import com.example.shooter.objects.players.player.Player;
 import java.util.ArrayList;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
-    volatile boolean playing;
-    private Block block;
     private Level level;
     private ArrayList<Block> blocks;
     private GameObjectContainer container = null;
     private Camera camera = null;
-    private int fps = 0;
-
-    private Paint paint;
-    private Canvas canvas;
     private int width, height;
 
 
@@ -35,20 +29,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     public GameView(Context context, int width, int height) {
         super(context);
-        this.setFocusable(true);
+        this.width = width;
+        this.height = height;
         this.getHolder().addCallback(this);
-        paint = new Paint();
+       // this.gameThread = new GameThread(this, getHolder());
+        this.setFocusable(true);
+    }
+
+    public void init() {
         level = new Level();
         camera = new Camera(0,0);
         container = new GameObjectContainer(camera, width, height);
         blocks = new ArrayList<>();
-        this.width = width;
-        this.height = height;
 
-        init();
-    }
-
-    public void init() {
         ArrayList<String> lvl = level.loadLevel(getContext());
 
         int row = 0;
@@ -89,6 +82,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 for (GameObject o : container.getObjectList()){
                     if(o instanceof Player){
                         ((Player) o).setXVel(0);
+                        ((Player) o).setFire(false);
                         //((Player) o).setToRight(true);
                     }
                 }
@@ -97,13 +91,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 for(GameObject o : container.getObjectList()){
                     if(o instanceof Player){
                         float eventX = motionEvent.getX();
-                        if(eventX >= width/2){
+                        if(eventX <= width/2 && eventX > width/4){
                             ((Player) o).setXVel(8);
                             ((Player) o).setToRight(true);
                         }
-                        else if(eventX < width/2){
+                        else if(eventX < width/4){
                             ((Player) o).setXVel(-8);
                             ((Player) o).setToRight(false);
+                        }
+                        else if(eventX > (width/4)*3){
+                            if(!((Player) o).isJumping()){
+                                ((Player) o).setYVel(-10);
+                                ((Player) o).setJumping(true);
+                            }
+                        }
+                        else if(eventX > width/2 && eventX <= (width/4)*3){
+                            ((Player) o).setFire(true);
                         }
 
                     }
@@ -116,6 +119,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         this.gameThread = new GameThread(this,holder);
+        init();
         this.gameThread.setRunning(true);
         this.gameThread.start();
     }
@@ -128,14 +132,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry= true;
+        this.gameThread.setRunning(false);
         while(retry) {
             try {
-                this.gameThread.setRunning(false);
                 this.gameThread.join();
+                retry = false;
             }catch(InterruptedException e)  {
                 e.printStackTrace();
             }
-            retry= true;
+          //  retry= true;
         }
     }
 }
