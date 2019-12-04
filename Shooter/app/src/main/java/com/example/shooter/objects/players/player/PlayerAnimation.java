@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.media.Image;
 
 import com.example.shooter.R;
+import com.example.shooter.TextureLoader;
 
 public class PlayerAnimation {
     private Bitmap[] animations = new Bitmap[8];
@@ -19,15 +20,15 @@ public class PlayerAnimation {
     private Bitmap currentImage = null;
 
     public PlayerAnimation(Context context){
-
-        animations[0] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_right2);
-        animations[1] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_right1);
-        animations[2] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_right0);
-        animations[3] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_right1);
-        animations[4] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left2);
-        animations[5] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left1);
-        animations[6] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left0);
-        animations[7] = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_walk_left1);
+        TextureLoader textureLoader = TextureLoader.getInstance();
+        animations[0] = textureLoader.getTexture(3);
+        animations[1] = textureLoader.getTexture(4);
+        animations[2] = textureLoader.getTexture(5);
+        animations[3] = textureLoader.getTexture(6);
+        animations[4] = textureLoader.getTexture(7);
+        animations[5] = textureLoader.getTexture(8);
+        animations[6] = textureLoader.getTexture(9);
+        animations[7] = textureLoader.getTexture(10);
 
 
         this.frames = animations.length;

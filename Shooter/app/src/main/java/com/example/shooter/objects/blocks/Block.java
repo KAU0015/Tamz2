@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.example.shooter.R;
+import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 
 public class Block extends GameObject {
@@ -18,8 +19,8 @@ public class Block extends GameObject {
     public Block(Context context, float x, float y) {
        this.x = x;
        this.y = y;
-
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture_block1);
+        bitmap = TextureLoader.getInstance().getTexture(0);
+      //  bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.texture_block1);
         this.width = bitmap.getWidth();
         this.height = bitmap.getHeight();
     }

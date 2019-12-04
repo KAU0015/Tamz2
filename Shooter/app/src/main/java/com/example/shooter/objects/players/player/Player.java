@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.example.shooter.R;
+import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.blocks.Block;
 import com.example.shooter.objects.players.Players;
@@ -37,9 +38,9 @@ public class Player extends Players {
 
         this.animation = new PlayerAnimation(context);
       //  this.shoots = new ArrayList<Shoot>();
-
-        this.imageIdleRight = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_idle_right);
-        this.imageIdleLeft = BitmapFactory.decodeResource(context.getResources(), R.drawable.soldier_idle_left);
+        TextureLoader textureLoader = TextureLoader.getInstance();
+        this.imageIdleRight = textureLoader.getTexture(1);
+        this.imageIdleLeft = textureLoader.getTexture(2);
 
         this.width = imageIdleRight.getWidth();
         this.height = imageIdleRight.getHeight();
@@ -63,10 +64,10 @@ public class Player extends Players {
             animation.drawAnimation(canvas, (int)x, (int)y);
         }
         else if(toRight){
-            canvas.drawBitmap(imageIdleRight, null, new Rect((int)x, (int)y, (int)(x+imageIdleRight.getWidth()), (int)(y+imageIdleRight.getHeight())), null);
+            canvas.drawBitmap(imageIdleRight, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), null);
         }
         else if(!toRight){
-            canvas.drawBitmap(imageIdleLeft, null, new Rect((int)x, (int)y, (int)(x+imageIdleLeft.getWidth()), (int)(y+imageIdleLeft.getHeight())), null);
+            canvas.drawBitmap(imageIdleLeft, null, new Rect((int)x, (int)y, (int)(x+width), (int)(y+height)), null);
         }
 
         /*for(Shoot s : shoots){
