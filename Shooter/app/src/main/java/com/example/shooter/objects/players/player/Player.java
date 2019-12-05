@@ -12,6 +12,8 @@ import com.example.shooter.R;
 import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.blocks.Block;
+import com.example.shooter.objects.packs.AmmoPack;
+import com.example.shooter.objects.packs.Packs;
 import com.example.shooter.objects.players.Players;
 import com.example.shooter.objects.shoots.Shoot;
 
@@ -78,15 +80,15 @@ public class Player extends Players {
             s.draw(canvas);
         }
 
-       /* Paint p = new Paint();
+        /*Paint p = new Paint();
         p.setColor(Color.GREEN);
         p.setStrokeWidth(1);
-        p.setStyle(Paint.Style.STROKE);
-        canvas.drawRect(getLeftBounds(), p);
+        p.setStyle(Paint.Style.STROKE);*/
+       /* canvas.drawRect(getLeftBounds(), p);
         canvas.drawRect(getRightBounds(), p);
         canvas.drawRect(getDownBounds(), p);
         canvas.drawRect(getUpBounds(), p);*/
-        //canvas.drawRect(getBounds(), p);
+       // canvas.drawRect(getBounds(), p);
 
     }
 
@@ -140,7 +142,7 @@ public class Player extends Players {
 
                     }
                     else{
-                        shoots.add(new Shoot(x-7, y+(height/3)*2-4, toRight));
+                        shoots.add(new Shoot(x-12, y+(height/3)*2-4, toRight));
                       //  PlayerUI.getInstance().setAmmo(-1);
                     }
                 }
@@ -156,7 +158,7 @@ public class Player extends Players {
     public void checkCollision(GameObject ob) {
 
         // nearExit = false;
-        if(!(ob instanceof Players)/* && !(ob instanceof Packs) && !(ob instanceof Exit)*/){
+        if(!(ob instanceof Players) && !(ob instanceof Packs)/* && !(ob instanceof Exit)*/){
             if(getUpBounds().intersect(ob.getBounds())){
                 y = ob.getY() + ob.getHeight()+1;
                 yVel = 0;
@@ -189,14 +191,14 @@ public class Player extends Players {
             nearExit = true;
         }*/
 
-        /*if(ob instanceof Packs){
+        if(ob instanceof Packs){
             if(ob instanceof AmmoPack){
-                if(getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
-                    PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
+                if(getBounds().intersect(ob.getBounds())){
+                   // PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
                     ((Packs) ob).setActivated(true);
                 }
             }
-            if(ob instanceof AidKit){
+           /* if(ob instanceof AidKit){
                 if(getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds()) && life < 100){
                     PlayerUI.getInstance().setLife(((Packs) ob).getBonus());
                     life += ((AidKit) ob).getBonus();
@@ -205,9 +207,9 @@ public class Player extends Players {
                     }
                     ((Packs) ob).setActivated(true);
                 }
-            }
+            }*/
 
-        }*/
+        }
 
 
         for(int i = 0; i < shoots.size(); i++){

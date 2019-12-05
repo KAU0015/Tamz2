@@ -13,6 +13,8 @@ import android.view.SurfaceView;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.GameObjectContainer;
 import com.example.shooter.objects.blocks.Block;
+import com.example.shooter.objects.packs.AmmoPack;
+import com.example.shooter.objects.players.enemies.RobotEnemy;
 import com.example.shooter.objects.players.player.Player;
 
 import java.util.ArrayList;
@@ -45,16 +47,23 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         ArrayList<String> lvl = level.loadLevel(getContext());
 
         int row = 0;
+        Bitmap b = TextureLoader.getInstance().getTexture(0);
 
         for (String s : lvl) {
 
             for (int i = 0; i < s.length(); i++) {
                 if (s.charAt(i) == '1') {
-                    Bitmap b = TextureLoader.getInstance().getTexture(0);
                     container.addObject(new Block(getContext(), i * b.getHeight(), row * b.getWidth()));
-                } else if (s.charAt(i) == 'P') {
-                    Bitmap b = TextureLoader.getInstance().getTexture(1);
+                }
+                else if (s.charAt(i) == 'P') {
                     container.addObject(new Player(getContext(), i * b.getHeight(), row * b.getWidth() + 1));
+                }
+                else if(s.charAt(i) == 'R'){
+                    container.addObject(new RobotEnemy(i * b.getHeight(), row * b.getWidth() + 1));
+                }
+                else if(s.charAt(i) == 'A'){
+                    Bitmap bmp = TextureLoader.getInstance().getTexture(15);
+                    container.addObject(new AmmoPack(i * b.getHeight() + b.getHeight()/4, row * b.getWidth() +b.getWidth()-bmp.getHeight()+ 1, 20));
                 }
             }
             row++;

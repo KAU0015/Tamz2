@@ -3,7 +3,9 @@ package com.example.shooter.objects;
 import android.graphics.Canvas;
 
 import com.example.shooter.Camera;
+import com.example.shooter.objects.packs.Packs;
 import com.example.shooter.objects.players.Players;
+import com.example.shooter.objects.players.enemies.MovableEnemy;
 import com.example.shooter.objects.players.player.Player;
 
 import java.util.ArrayList;
@@ -33,10 +35,10 @@ public class GameObjectContainer {
     public synchronized void checkObjectCollision() {
         for(GameObject o : objectList){
 
-           /* if(o instanceof MovableEnemy){
+            if(o instanceof MovableEnemy){
                 ((MovableEnemy) o).setLeft(false);
                 ((MovableEnemy) o).setRight(false);
-            }*/
+            }
 
             if(o instanceof Players){
                 for(GameObject ob : objectList){
@@ -50,12 +52,12 @@ public class GameObjectContainer {
                 }
             }
 
-           /* if(o instanceof  Players && o instanceof MovableEnemy && (!((MovableEnemy) o).getLeft() || !((MovableEnemy) o).getRight())){
+            if(o instanceof  Players && o instanceof MovableEnemy && (!((MovableEnemy) o).getLeft() || !((MovableEnemy) o).getRight())){
                 ((Players) o).setxVel(-((Players) o).getxVel());
                 ((Players) o).setToRight(!((Players) o).getToRight());
-            }*/
+            }
         }
-        //removeObject();
+        removeObject();
     }
 
 
@@ -64,7 +66,7 @@ public class GameObjectContainer {
     }
 
 
-   /* public synchronized void removeObject() {
+    public synchronized void removeObject() {
 
         for(int i = 0; i < objectList.size(); i++){
             if(objectList.get(i) instanceof Players && ((Players) objectList.get(i)).getLife() <= 0){
@@ -74,7 +76,7 @@ public class GameObjectContainer {
                 objectList.remove(i);
             }
         }
-    }*/
+    }
 
 
     public void moveObject() {
