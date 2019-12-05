@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.example.shooter.PlayerUI;
 import com.example.shooter.R;
 import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
@@ -132,7 +133,7 @@ public class Player extends Players {
         else if(xVel < 0)
             animation.runAnimationL();
 
-      /*  if(PlayerUI.getInstance().getAmmo() > 0){*/
+        if(PlayerUI.getInstance().getAmmo() > 0){
             if(fire){
                 firing++;
 
@@ -140,16 +141,16 @@ public class Player extends Players {
                     firing = 0;
                     if(toRight){
                         shoots.add(new Shoot(x+width-9, y+(height/3)*2-4, toRight));
-                       // PlayerUI.getInstance().setAmmo(-1);
+                        PlayerUI.getInstance().setAmmo(-1);
 
                     }
                     else{
                         shoots.add(new Shoot(x-12, y+(height/3)*2-4, toRight));
-                      //  PlayerUI.getInstance().setAmmo(-1);
+                        PlayerUI.getInstance().setAmmo(-1);
                     }
                 }
             }
-       /* }*/
+        }
 
         for(Shoot s : shoots){
             s.move();
@@ -194,13 +195,13 @@ public class Player extends Players {
         if(ob instanceof Packs){
             if(ob instanceof AmmoPack){
                 if(getBounds().intersect(ob.getBounds())){
-                   // PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
+                    PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
                     ((Packs) ob).setActivated(true);
                 }
             }
             if(ob instanceof AidKit){
                 if(getBounds().intersect(ob.getBounds()) && life < 100){
-                   // PlayerUI.getInstance().setLife(((Packs) ob).getBonus());
+                    PlayerUI.getInstance().setLife(((Packs) ob).getBonus());
                     life += ((AidKit) ob).getBonus();
                     if(life > 100){
                         life = 100;

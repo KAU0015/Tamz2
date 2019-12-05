@@ -8,10 +8,24 @@
 
     <Button
         android:id="@+id/start_game"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="36dp"
         android:text="Start Game"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/continue_game"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:text="CONTINUE GAME"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start_game"
+        app:layout_constraintVertical_bias="0.134" />
 </androidx.constraintlayout.widget.ConstraintLayout>

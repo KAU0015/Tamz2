@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import com.example.shooter.PlayerUI;
 import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.players.Players;
@@ -56,7 +57,7 @@ public class Shoot extends Players {
         if(col && ob instanceof Players){
             ((Players) ob).setLife(-10);
             if(ob instanceof Player){
-               // PlayerUI.getInstance().setLife(-10);
+                PlayerUI.getInstance().setLife(-10);
             }
         }
     }

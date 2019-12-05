@@ -1,6 +1,9 @@
 package com.example.shooter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +12,7 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.GameObjectContainer;
@@ -21,6 +25,8 @@ import com.example.shooter.objects.players.player.Player;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private Level level;
     private ArrayList<Block> blocks;
@@ -29,7 +35,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private int width, height;
     public static boolean exitLevel = false;
     private int levelNum = 1;
-
+    private Context context;
+    SharedPreferences preferences;
+    String sharedPrefFile = "prefFile";
 
     private GameThread gameThread;
 
@@ -37,9 +45,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         this.width = width;
         this.height = height;
+        this.context = context;
+        preferences = context.getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         this.getHolder().addCallback(this);
        // this.gameThread = new GameThread(this, getHolder());
         this.setFocusable(true);
+        PlayerUI.getInstance().restart();
     }
 
     public void init() {
@@ -48,7 +59,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         container = new GameObjectContainer(camera, width, height);
         blocks = new ArrayList<>();
 
-        ArrayList<String> lvl = level.loadLevel(getContext(), levelNum);
+        ArrayList<String> lvl = level.loadLevel(getContext(), PlayerUI.getInstance().getLevel());
 
         int row = 0;
         Bitmap b = TextureLoader.getInstance().getTexture(0);
@@ -85,6 +96,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         container.moveObject();
         container.checkObjectCollision();
+
+        if(PlayerUI.getInstance().getLife() <= 0){
+            this.gameThread.setRunning(false);
+            Intent myIntent = new Intent(context,   MainActivity.class);
+            context.startActivity(myIntent);
+            ((Activity) context).finish();
+        }
     }
 
     @Override
@@ -94,6 +112,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.translate(camera.getX(), camera.getY());
         container.drawObject(canvas);
         canvas.translate(-camera.getX(), -camera.getY());
+
+
+        PlayerUI.getInstance().draw(canvas);
     }
 
     @Override
@@ -142,12 +163,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void nextLevel(){
-        levelNum++;
+        PlayerUI.getInstance().nextLevel();
         init();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        PlayerUI.getInstance().setLives(preferences.getInt("lives", PlayerUI.getInstance().getNewGameLives()));
+        PlayerUI.getInstance().setLevel(preferences.getInt("level", PlayerUI.getInstance().getNewGameLevel()));
         this.gameThread = new GameThread(this,holder);
         init();
         this.gameThread.setRunning(true);
@@ -161,6 +184,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        SharedPreferences.Editor preferencesEditor = preferences.edit();
+        preferencesEditor.putInt("lives", PlayerUI.getInstance().getLives());
+        preferencesEditor.putInt("level", PlayerUI.getInstance().getLevel());
+        preferencesEditor.apply();
         boolean retry= true;
         this.gameThread.setRunning(false);
         while(retry) {
