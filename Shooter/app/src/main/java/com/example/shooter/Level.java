@@ -15,12 +15,12 @@ public class Level {
     }
 
 
-    public ArrayList<String> loadLevel(Context context){
+    public ArrayList<String> loadLevel(Context context, int num){
         ArrayList<String> level = new ArrayList<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
-                    new InputStreamReader(context.getAssets().open("level1")));
+                    new InputStreamReader(context.getAssets().open("level" + num)));
             String line;
             while ((line = reader.readLine()) != null) {
                 level.add(line);

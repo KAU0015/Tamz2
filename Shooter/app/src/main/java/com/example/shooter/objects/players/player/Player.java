@@ -12,6 +12,8 @@ import com.example.shooter.R;
 import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.blocks.Block;
+import com.example.shooter.objects.buttons.Exit;
+import com.example.shooter.objects.packs.AidKit;
 import com.example.shooter.objects.packs.AmmoPack;
 import com.example.shooter.objects.packs.Packs;
 import com.example.shooter.objects.players.Players;
@@ -156,16 +158,14 @@ public class Player extends Players {
 
     @Override
     public void checkCollision(GameObject ob) {
+        //nearExit = false;
 
-        // nearExit = false;
-        if(!(ob instanceof Players) && !(ob instanceof Packs)/* && !(ob instanceof Exit)*/){
+        if(!(ob instanceof Players) && !(ob instanceof Packs) && !(ob instanceof Exit)){
             if(getUpBounds().intersect(ob.getBounds())){
                 y = ob.getY() + ob.getHeight()+1;
                 yVel = 0;
                 falling = true;
             }
-
-
 
             if(getDownBounds().intersect(ob.getBounds())){
                 y = ob.getY() - height;
@@ -187,9 +187,9 @@ public class Player extends Players {
 
         }
 
-       /* if(ob instanceof Exit && getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds())){
+        if(ob instanceof Exit && getBounds().intersect(ob.getBounds())){
             nearExit = true;
-        }*/
+        }
 
         if(ob instanceof Packs){
             if(ob instanceof AmmoPack){
@@ -198,16 +198,16 @@ public class Player extends Players {
                     ((Packs) ob).setActivated(true);
                 }
             }
-           /* if(ob instanceof AidKit){
-                if(getBounds().toRectBounds().intersects(ob.getBounds().toRectBounds()) && life < 100){
-                    PlayerUI.getInstance().setLife(((Packs) ob).getBonus());
+            if(ob instanceof AidKit){
+                if(getBounds().intersect(ob.getBounds()) && life < 100){
+                   // PlayerUI.getInstance().setLife(((Packs) ob).getBonus());
                     life += ((AidKit) ob).getBonus();
                     if(life > 100){
                         life = 100;
                     }
                     ((Packs) ob).setActivated(true);
                 }
-            }*/
+            }
 
         }
 

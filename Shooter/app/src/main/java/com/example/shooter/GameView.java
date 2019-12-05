@@ -13,6 +13,8 @@ import android.view.SurfaceView;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.GameObjectContainer;
 import com.example.shooter.objects.blocks.Block;
+import com.example.shooter.objects.buttons.Exit;
+import com.example.shooter.objects.packs.AidKit;
 import com.example.shooter.objects.packs.AmmoPack;
 import com.example.shooter.objects.players.enemies.RobotEnemy;
 import com.example.shooter.objects.players.player.Player;
@@ -25,6 +27,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private GameObjectContainer container = null;
     private Camera camera = null;
     private int width, height;
+    public static boolean exitLevel = false;
+    private int levelNum = 1;
 
 
     private GameThread gameThread;
@@ -44,7 +48,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         container = new GameObjectContainer(camera, width, height);
         blocks = new ArrayList<>();
 
-        ArrayList<String> lvl = level.loadLevel(getContext());
+        ArrayList<String> lvl = level.loadLevel(getContext(), levelNum);
 
         int row = 0;
         Bitmap b = TextureLoader.getInstance().getTexture(0);
@@ -64,6 +68,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 else if(s.charAt(i) == 'A'){
                     Bitmap bmp = TextureLoader.getInstance().getTexture(15);
                     container.addObject(new AmmoPack(i * b.getHeight() + b.getHeight()/4, row * b.getWidth() +b.getWidth()-bmp.getHeight()+ 1, 20));
+                }
+                else if(s.charAt(i) == 'M'){
+                    Bitmap bmp = TextureLoader.getInstance().getTexture(16);
+                    container.addObject(new AidKit(i * b.getHeight() + b.getHeight()/4, row * b.getWidth() +b.getWidth()-bmp.getHeight()+ 1, 20));
+                }
+                else if(s.charAt(i) == 'E'){
+                    Bitmap bmp = TextureLoader.getInstance().getTexture(16);
+                    container.addObject(new Exit(i * b.getHeight() + b.getHeight()/4, row * b.getWidth() +bmp.getHeight()));
                 }
             }
             row++;
@@ -118,11 +130,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                             ((Player) o).setFire(true);
                         }
 
+                        if(((Player) o).isNearExit()){
+                            nextLevel();
+                        }
+
                     }
                 }
                 break;
         }
         return true;
+    }
+
+    private void nextLevel(){
+        levelNum++;
+        init();
     }
 
     @Override

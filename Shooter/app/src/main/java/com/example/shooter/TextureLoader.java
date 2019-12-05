@@ -44,6 +44,8 @@ public class TextureLoader {
         textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.robot_left));
         textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.robot_right));
         textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.ammo_pack));
+        textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.aid_kit));
+        textures.add(BitmapFactory.decodeResource(context.getResources(), R.drawable.exit_button));
     }
 
     public Bitmap getTexture(int i){
