@@ -28,9 +28,10 @@ public class GameOverActivity extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(GameOverActivity.this, MainActivity.class);
-                startActivity(myIntent);
-                finish();
+              /*  Intent myIntent = new Intent(GameOverActivity.this, MainActivity.class);
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(myIntent);*/
+                GameOverActivity.this.finish();
             }
         });
     }

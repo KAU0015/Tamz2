@@ -94,6 +94,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+
+        if(PlayerUI.getInstance().getLives() <= 0)
+            return;
         container.moveObject();
         container.checkObjectCollision();
 
@@ -196,6 +199,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         preferencesEditor.putInt("lives", PlayerUI.getInstance().getLives());
         preferencesEditor.putInt("level", PlayerUI.getInstance().getLevel());
         preferencesEditor.apply();
+
+        if(PlayerUI.getInstance().getLives() <= 0){
+            MainActivity.setButtonState(false);
+        }
+        else{
+            MainActivity.setButtonState(true);
+        }
         boolean retry= true;
         this.gameThread.setRunning(false);
         while(retry) {
@@ -205,7 +215,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }catch(InterruptedException e)  {
                 e.printStackTrace();
             }
-          //  retry= true;
         }
     }
 }

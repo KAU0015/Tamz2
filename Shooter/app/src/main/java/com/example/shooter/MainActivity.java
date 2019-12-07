@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 
-    private Button startGame, continueGame;
+    private static Button startGame, continueGame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,5 +55,9 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+    public static void setButtonState(boolean enabled){
+        continueGame.setEnabled(enabled);
     }
 }
