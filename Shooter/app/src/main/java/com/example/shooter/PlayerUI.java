@@ -56,7 +56,7 @@ public class PlayerUI extends GameObject {
         }
     }
 
-    public void minusLife(){
+    public void lostLives(){
         this.lives--;
     }
 
@@ -65,7 +65,7 @@ public class PlayerUI extends GameObject {
     }
 
     public int getNewGameLives(){
-        return 5;
+        return 1;
     }
 
     public void setLevel(int level){
@@ -101,7 +101,6 @@ public class PlayerUI extends GameObject {
     public void restart(){
         this.ammo = 20;
         this.life = 100;
-        this.level = 1;
     }
 
     public int getAmmo() {

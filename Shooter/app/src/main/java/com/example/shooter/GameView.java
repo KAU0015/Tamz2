@@ -50,7 +50,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         this.getHolder().addCallback(this);
        // this.gameThread = new GameThread(this, getHolder());
         this.setFocusable(true);
-        PlayerUI.getInstance().restart();
+       // PlayerUI.getInstance().restart();
     }
 
     public void init() {
@@ -98,10 +98,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         container.checkObjectCollision();
 
         if(PlayerUI.getInstance().getLife() <= 0){
-            this.gameThread.setRunning(false);
-            Intent myIntent = new Intent(context,   MainActivity.class);
-            context.startActivity(myIntent);
-            ((Activity) context).finish();
+           PlayerUI.getInstance().lostLives();
+
+           if(PlayerUI.getInstance().getLives() <= 0){
+               this.gameThread.setRunning(false);
+               Intent myIntent = new Intent(context,   GameOverActivity.class);
+               context.startActivity(myIntent);
+               ((Activity) context).finish();
+           }
+           else{
+               init();
+               PlayerUI.getInstance().restart();
+           }
         }
     }
 

@@ -25,17 +25,21 @@ public class MainActivity extends Activity {
 
         startGame = findViewById(R.id.start_game);
         continueGame = findViewById(R.id.continue_game);
+        String sharedPrefFile = "prefFile";
+        final SharedPreferences preferences = getApplicationContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+
+        if(preferences.getInt("lives", 0) <= 0){
+            continueGame.setEnabled(false);
+        }
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), GameActivity.class));
-                String sharedPrefFile = "prefFile";
-                SharedPreferences preferences = getApplicationContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
                 SharedPreferences.Editor preferencesEditor = preferences.edit();
                 preferencesEditor.putInt("lives", PlayerUI.getInstance().getNewGameLives());
                 preferencesEditor.putInt("level", PlayerUI.getInstance().getNewGameLevel());
                 preferencesEditor.apply();
+                startActivity(new Intent(getApplicationContext(), GameActivity.class));
             }
         });
 
@@ -43,9 +47,13 @@ public class MainActivity extends Activity {
         continueGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), GameActivity.class));
+                    startActivity(new Intent(getApplicationContext(), GameActivity.class));
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
