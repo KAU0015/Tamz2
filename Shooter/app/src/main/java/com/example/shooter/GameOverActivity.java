@@ -10,16 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.shooter.database.DBHandler;
+
 public class GameOverActivity extends Activity {
 
     private Button submit;
     private TextView score;
     private EditText name;
+    private DBHandler dbHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
+        dbHandler = new DBHandler(this);
         PlayerUI.getInstance().restart();
         submit = findViewById(R.id.submit);
         score = findViewById(R.id.score);
@@ -31,7 +35,8 @@ public class GameOverActivity extends Activity {
               /*  Intent myIntent = new Intent(GameOverActivity.this, MainActivity.class);
                 myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(myIntent);*/
-                GameOverActivity.this.finish();
+              dbHandler.insert("pokus1", 20);
+              GameOverActivity.this.finish();
             }
         });
     }

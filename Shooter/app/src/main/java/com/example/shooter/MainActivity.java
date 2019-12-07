@@ -17,7 +17,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 
-    private static Button startGame, continueGame;
+    private static Button continueGame;
+    private Button startGame, settings, highScore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +26,9 @@ public class MainActivity extends Activity {
 
         startGame = findViewById(R.id.start_game);
         continueGame = findViewById(R.id.continue_game);
+        settings = findViewById(R.id.settings);
+        highScore = findViewById(R.id.high_score);
+
         String sharedPrefFile = "prefFile";
         final SharedPreferences preferences = getApplicationContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
@@ -48,6 +52,20 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                     startActivity(new Intent(getApplicationContext(), GameActivity.class));
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+            }
+        });
+
+        highScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), HighScoreActivity.class));
             }
         });
     }
