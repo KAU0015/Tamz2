@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+import com.example.shooter.GameSettings;
 import com.example.shooter.TextureLoader;
 
 public class AidKit extends Packs {
@@ -12,7 +13,7 @@ public class AidKit extends Packs {
     public AidKit(float x, float y, int bonus){
         this.x = x;
         this.y = y;
-        this.bonus = bonus;
+        this.bonus = bonus/GameSettings.getInstance().getDifficulty();
 
         TextureLoader textureLoader = TextureLoader.getInstance();
 

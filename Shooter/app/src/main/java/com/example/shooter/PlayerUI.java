@@ -23,8 +23,6 @@ public class PlayerUI extends GameObject {
     private PlayerUI() {
         this.x = 0;
         this.y = 0;
-
-
     }
 
     @Override
@@ -68,7 +66,7 @@ public class PlayerUI extends GameObject {
     }
 
     public int getNewGameLives(){
-        return 1;
+        return 6/GameSettings.getInstance().getDifficulty();
     }
 
     public void setLevel(int level){

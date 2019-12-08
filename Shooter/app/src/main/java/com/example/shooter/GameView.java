@@ -50,7 +50,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         this.getHolder().addCallback(this);
        // this.gameThread = new GameThread(this, getHolder());
         this.setFocusable(true);
-       // PlayerUI.getInstance().restart();
+        PlayerUI.getInstance().restart();
     }
 
     public void init() {
@@ -111,6 +111,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
            }
            else{
                init();
+             /*  SharedPreferences.Editor preferencesEditor = preferences.edit();
+               preferencesEditor.putInt("score", PlayerUI.getInstance().getScore());
+               preferencesEditor.apply();*/
                PlayerUI.getInstance().restart();
            }
         }

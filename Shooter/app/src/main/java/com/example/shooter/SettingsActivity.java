@@ -1,6 +1,7 @@
 package com.example.shooter;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,9 @@ public class SettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        String sharedPrefFile = "prefFile";
+        final SharedPreferences preferences = getApplicationContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         difficulties = findViewById(R.id.difficulty_spinner);
         sound = findViewById(R.id.sound_option);
@@ -47,6 +51,9 @@ public class SettingsActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 GameSettings.getInstance().setStrDifficulty(parent.getItemAtPosition(position).toString());
+                SharedPreferences.Editor preferencesEditor = preferences.edit();
+                preferencesEditor.putString("difficulty", GameSettings.getInstance().getStrDifficulty());
+                preferencesEditor.apply();
             }
 
             @Override
@@ -58,15 +65,18 @@ public class SettingsActivity extends Activity {
         sound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor preferencesEditor = preferences.edit();
                 if(isChecked){
                     GameSettings.getInstance().setSound(true);
+                    preferencesEditor.putBoolean("sound", true);
                     sound.setText("on");
                 }
                 else{
                     GameSettings.getInstance().setSound(false);
+                    preferencesEditor.putBoolean("sound", false);
                     sound.setText("off");
                 }
-
+                preferencesEditor.apply();
             }
         });
     }

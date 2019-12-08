@@ -32,6 +32,10 @@ public class MainActivity extends Activity {
         String sharedPrefFile = "prefFile";
         final SharedPreferences preferences = getApplicationContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
+        GameSettings gs = GameSettings.getInstance();
+        gs.setStrDifficulty(preferences.getString("difficulty", gs.getDefaultDifficulty()));
+        gs.setSound(preferences.getBoolean("sound", gs.getDefaultSound()));
+
         if(preferences.getInt("lives", 0) <= 0){
             continueGame.setEnabled(false);
         }

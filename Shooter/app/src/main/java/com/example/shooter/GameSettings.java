@@ -12,10 +12,19 @@ public class GameSettings {
     }
 
     private GameSettings() {
+
     }
 
     public int getDifficulty() {
         return difficulty;
+    }
+
+    public String getDefaultDifficulty(){
+        return "EASY";
+    }
+
+    public boolean getDefaultSound(){
+        return false;
     }
 
     public void setDifficulty(int difficulty) {

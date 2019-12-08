@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.example.shooter.GameSettings;
 import com.example.shooter.TextureLoader;
 
 public class AmmoPack extends Packs {
@@ -14,7 +15,7 @@ public class AmmoPack extends Packs {
     public AmmoPack(float x, float y, int bonus){
         this.x = x;
         this.y = y;
-        this.bonus = bonus;
+        this.bonus = bonus/GameSettings.getInstance().getDifficulty();
 
         TextureLoader textureLoader = TextureLoader.getInstance();
 
