@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.example.shooter.SoundHandler;
 import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.blocks.Block;
@@ -74,9 +75,11 @@ public class RobotEnemy extends Players implements MovableEnemy {
                 firing = 0;
                 if(toRight){
                     shoots.add(new Shoot(x+width-9, y+height/5*2, toRight));
+                    SoundHandler.getInstance().enemyPistol();
                 }
                 else{
                     shoots.add(new Shoot(x-12, y+height/5*2, toRight));
+                    SoundHandler.getInstance().enemyPistol();
                 }
             }
         }

@@ -177,6 +177,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private void nextLevel(){
+        SoundHandler.getInstance().playHail();
         PlayerUI.getInstance().nextLevel();
         PlayerUI.getInstance().addScore(100);
         SharedPreferences.Editor preferencesEditor = preferences.edit();
@@ -225,6 +226,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 e.printStackTrace();
             }
         }
+
+        SoundHandler.getInstance().playMenu();
     }
 }
 

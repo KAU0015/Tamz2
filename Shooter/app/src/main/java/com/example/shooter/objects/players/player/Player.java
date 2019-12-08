@@ -7,9 +7,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 
 import com.example.shooter.PlayerUI;
 import com.example.shooter.R;
+import com.example.shooter.SoundHandler;
 import com.example.shooter.TextureLoader;
 import com.example.shooter.objects.GameObject;
 import com.example.shooter.objects.blocks.Block;
@@ -36,7 +40,6 @@ public class Player extends Players {
     private int speedFire = 8;
     private int firing = 0;
     private boolean nearExit = false;
-
 
     public Player(Context context, float x, float y){
         this.life = 100;
@@ -142,11 +145,12 @@ public class Player extends Players {
                     if(toRight){
                         shoots.add(new Shoot(x+width-9, y+(height/3)*2-4, toRight));
                         PlayerUI.getInstance().setAmmo(-1);
-
+                        SoundHandler.getInstance().gunFire();
                     }
                     else{
                         shoots.add(new Shoot(x-12, y+(height/3)*2-4, toRight));
                         PlayerUI.getInstance().setAmmo(-1);
+                        SoundHandler.getInstance().gunFire();
                     }
                 }
             }
@@ -198,6 +202,7 @@ public class Player extends Players {
                     PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
                     ((Packs) ob).setActivated(true);
                     PlayerUI.getInstance().addScore(20);
+                    SoundHandler.getInstance().ammoPicked();
                 }
             }
             if(ob instanceof AidKit){
@@ -208,6 +213,7 @@ public class Player extends Players {
                         life = 100;
                     }
                     ((Packs) ob).setActivated(true);
+                    SoundHandler.getInstance().aidKitPicked();
                 }
             }
 
