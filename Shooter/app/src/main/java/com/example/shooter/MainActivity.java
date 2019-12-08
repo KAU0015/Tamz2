@@ -42,6 +42,7 @@ public class MainActivity extends Activity {
                 SharedPreferences.Editor preferencesEditor = preferences.edit();
                 preferencesEditor.putInt("lives", PlayerUI.getInstance().getNewGameLives());
                 preferencesEditor.putInt("level", PlayerUI.getInstance().getNewGameLevel());
+                preferencesEditor.putInt("score", PlayerUI.getInstance().getNewGameScore());
                 preferencesEditor.apply();
                 startActivity(new Intent(getApplicationContext(), GameActivity.class));
             }

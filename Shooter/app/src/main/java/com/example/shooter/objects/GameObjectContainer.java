@@ -3,6 +3,7 @@ package com.example.shooter.objects;
 import android.graphics.Canvas;
 
 import com.example.shooter.Camera;
+import com.example.shooter.PlayerUI;
 import com.example.shooter.objects.packs.Packs;
 import com.example.shooter.objects.players.Players;
 import com.example.shooter.objects.players.enemies.MovableEnemy;
@@ -70,6 +71,8 @@ public class GameObjectContainer {
 
         for(int i = 0; i < objectList.size(); i++){
             if(objectList.get(i) instanceof Players && ((Players) objectList.get(i)).getLife() <= 0){
+                if(!(objectList.get(i) instanceof Player))
+                    PlayerUI.getInstance().addScore(50);
                 objectList.remove(i);
             }
             else if(objectList.get(i) instanceof Packs && ((Packs) objectList.get(i)).isActivated()){

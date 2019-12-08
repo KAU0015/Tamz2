@@ -197,6 +197,7 @@ public class Player extends Players {
                 if(getBounds().intersect(ob.getBounds())){
                     PlayerUI.getInstance().setAmmo(((Packs) ob).getBonus());
                     ((Packs) ob).setActivated(true);
+                    PlayerUI.getInstance().addScore(20);
                 }
             }
             if(ob instanceof AidKit){

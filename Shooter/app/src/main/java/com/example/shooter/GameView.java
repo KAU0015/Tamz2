@@ -175,6 +175,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     private void nextLevel(){
         PlayerUI.getInstance().nextLevel();
+        PlayerUI.getInstance().addScore(100);
+        SharedPreferences.Editor preferencesEditor = preferences.edit();
+        preferencesEditor.putInt("score", PlayerUI.getInstance().getScore());
+        preferencesEditor.apply();
         init();
     }
 
@@ -182,6 +186,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         PlayerUI.getInstance().setLives(preferences.getInt("lives", PlayerUI.getInstance().getNewGameLives()));
         PlayerUI.getInstance().setLevel(preferences.getInt("level", PlayerUI.getInstance().getNewGameLevel()));
+        PlayerUI.getInstance().setScore(preferences.getInt("score", PlayerUI.getInstance().getNewGameScore()));
         this.gameThread = new GameThread(this,holder);
         init();
         this.gameThread.setRunning(true);
@@ -198,6 +203,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         SharedPreferences.Editor preferencesEditor = preferences.edit();
         preferencesEditor.putInt("lives", PlayerUI.getInstance().getLives());
         preferencesEditor.putInt("level", PlayerUI.getInstance().getLevel());
+       // preferencesEditor.putInt("score", PlayerUI.getInstance().getScore());
         preferencesEditor.apply();
 
         if(PlayerUI.getInstance().getLives() <= 0){

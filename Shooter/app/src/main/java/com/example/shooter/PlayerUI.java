@@ -14,6 +14,7 @@ public class PlayerUI extends GameObject {
     private int ammo = 20;
     private int level;
     private int lives;
+    private int score;
 
     public static PlayerUI getInstance() {
         return ourInstance;
@@ -37,12 +38,14 @@ public class PlayerUI extends GameObject {
         canvas.drawText("AMMO: " + ammo, x+280, y + 65, p);
         canvas.drawText("LEVEL: " + level, x+500, y + 65, p);
         canvas.drawText("LIVES: " + lives, x+700, y + 65, p);
+        canvas.drawText("SCORE: " + score, x+900, y + 65, p);
         p.setColor(Color.BLACK);
         p.setStyle(Paint.Style.STROKE);
         canvas.drawText("LIFE: " + life, x+80, y + 65, p);
         canvas.drawText("AMMO: " + ammo, x+280, y + 65, p);
         canvas.drawText("LEVEL: " + level, x+500, y + 65, p);
         canvas.drawText("LIVES: " + lives, x+700, y + 65, p);
+        canvas.drawText("SCORE: " + score, x+900, y + 65, p);
     }
 
     public int getLife() {
@@ -109,5 +112,21 @@ public class PlayerUI extends GameObject {
 
     public void setAmmo(int ammo) {
         this.ammo += ammo;
+    }
+
+    public void setScore(int score){
+        this.score = score;
+    }
+
+    public int getScore(){
+        return this.score;
+    }
+
+    public void addScore(int score){
+        this.score+=score;
+    }
+
+    public int getNewGameScore(){
+        return 0;
     }
 }

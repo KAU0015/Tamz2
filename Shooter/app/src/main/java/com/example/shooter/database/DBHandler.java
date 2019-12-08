@@ -54,7 +54,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public List<PlayerTable> selectTop10(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res =  db.rawQuery("select * from " + TABLE_NAME +" order by " + COLUMN_SCORE + " limit 10 ", null);
+        Cursor res =  db.rawQuery("select * from " + TABLE_NAME +" order by " + COLUMN_SCORE + " desc "+ " limit 10 ", null);
         List<PlayerTable> players = new ArrayList<>();
 
         try {

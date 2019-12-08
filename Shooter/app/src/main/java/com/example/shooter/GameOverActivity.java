@@ -29,13 +29,12 @@ public class GameOverActivity extends Activity {
         score = findViewById(R.id.score);
         name = findViewById(R.id.user_name);
 
+        score.setText("SCORE: " + PlayerUI.getInstance().getScore());
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent myIntent = new Intent(GameOverActivity.this, MainActivity.class);
-                myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(myIntent);*/
-              dbHandler.insert("pokus1", 20);
+              dbHandler.insert(name.getText().toString(), PlayerUI.getInstance().getScore());
               GameOverActivity.this.finish();
             }
         });
