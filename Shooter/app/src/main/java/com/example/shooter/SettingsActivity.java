@@ -70,11 +70,13 @@ public class SettingsActivity extends Activity {
                     GameSettings.getInstance().setSound(true);
                     preferencesEditor.putBoolean("sound", true);
                     sound.setText("on");
+                    SoundHandler.getInstance().playMenu();
                 }
                 else{
                     GameSettings.getInstance().setSound(false);
                     preferencesEditor.putBoolean("sound", false);
                     sound.setText("off");
+                    SoundHandler.getInstance().stopMenu();
                 }
                 preferencesEditor.apply();
             }

@@ -36,7 +36,21 @@ public class GameOverActivity extends Activity {
             public void onClick(View v) {
               dbHandler.insert(name.getText().toString(), PlayerUI.getInstance().getScore());
               GameOverActivity.this.finish();
+              SoundHandler.getInstance().dance();
             }
         });
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        SoundHandler.getInstance().stopBar();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        SoundHandler.getInstance().playBar();
     }
 }

@@ -29,5 +29,6 @@ public class GameActivity extends Activity {
     @Override
     public void onBackPressed() {
         GameActivity.this.finish();
+        SoundHandler.getInstance().playMenu();
     }
 }

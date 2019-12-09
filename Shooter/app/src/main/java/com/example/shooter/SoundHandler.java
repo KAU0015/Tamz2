@@ -14,15 +14,20 @@ public class SoundHandler {
 
     private static final int MAX_STREAMS = 5;
     private SoundPool soundPool;
-    private int pistol, aidKit, difficultyEasy, difficultyHard, ammo, startGame, scream, enemyPistol, hail;
+    private int pistol, aidKit, ammo, startGame, scream, enemyPistol, hail, dance, bar;
     private  Context context;
     private int menuStreamID;
     private AudioManager audioManager;
     private  boolean loaded = false;
     private MediaPlayer mediaPlayer;
+    private int volume = 1;
 
     private SoundHandler() {
         this.soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
+    }
+
+    public void setVolume(int volume){
+        this.volume = volume;
     }
 
     public void setContext(Context context){
@@ -37,38 +42,56 @@ public class SoundHandler {
         this.scream = this.soundPool.load(context, R.raw.scream,1);
         this.enemyPistol = this.soundPool.load(context, R.raw.enemypistol,1);
         this.hail = this.soundPool.load(context, R.raw.hail,1);
+        this.dance = this.soundPool.load(context, R.raw.dance,1);
     }
 
     public void gunFire(){
-       this.soundPool.play(this.pistol,1, 1, 1, 0, 1f);
+       this.soundPool.play(this.pistol,volume, volume, 1, 0, 1f);
     }
 
     public void enemyPistol(){
-        this.soundPool.play(this.enemyPistol,1, 1, 1, 0, 1f);
+        this.soundPool.play(this.enemyPistol,volume*0.35f, volume*0.35f, 1, 0, 1f);
     }
 
     public void ammoPicked(){
-        this.soundPool.play(this.ammo,1, 1, 1, 0, 1f);
+        this.soundPool.play(this.ammo,volume, volume, 1, 0, 1f);
     }
 
     public void startGame(){
-        this.soundPool.play(this.startGame,1, 1, 1, 0, 1f);
+        this.soundPool.play(this.startGame,volume, volume, 1, 0, 1f);
     }
 
     public void playHail(){
-        this.soundPool.play(this.hail,1, 1, 1, 0, 1f);
+        this.soundPool.play(this.hail,volume, volume, 1, 0, 1f);
     }
 
     public void aidKitPicked(){
-        this.soundPool.play(this.aidKit,1, 1, 1, 0, 1f);
+        this.soundPool.play(this.aidKit,volume, volume, 1, 0, 1f);
     }
 
     public void scream(){
-        this.soundPool.play(this.scream,1, 1, 1, 0, 1f);
+        this.soundPool.play(this.scream,volume*0.5f, volume*0.5f, 1, 0, 1f);
+    }
+
+    public void dance(){
+        this.soundPool.play(this.dance,volume*2f, volume*2f, 1, 0, 1f);
+    }
+
+
+    public void playBar(){
+        mediaPlayer = MediaPlayer.create(context, R.raw.bar);
+        mediaPlayer.setVolume(volume*0.5f, volume*0.5f);
+        mediaPlayer.start();
+        mediaPlayer.setLooping(true);
+    }
+
+    public void stopBar(){
+        mediaPlayer.stop();
     }
 
     public void playMenu(){
         mediaPlayer = MediaPlayer.create(context, R.raw.menu);
+        mediaPlayer.setVolume(volume*0.5f, volume*0.5f);
         mediaPlayer.start();
         mediaPlayer.setLooping(true);
     }

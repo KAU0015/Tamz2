@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
         SoundHandler.getInstance().setContext(getApplicationContext());
         SoundHandler.getInstance().loadSounds();
 
-        SoundHandler.getInstance().playMenu();
+        //SoundHandler.getInstance().playMenu();
 
 
         startGame = findViewById(R.id.start_game);
@@ -90,6 +90,18 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        SoundHandler.getInstance().stopMenu();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        SoundHandler.getInstance().playMenu();
     }
 
     public static void setButtonState(boolean enabled){

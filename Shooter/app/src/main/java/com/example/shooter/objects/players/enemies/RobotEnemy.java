@@ -25,8 +25,8 @@ public class RobotEnemy extends Players implements MovableEnemy {
     private Bitmap enemyRight;
     private Bitmap enemyLeft;
     private List<Shoot> shoots;
-    private int speedFire = 16;
-    private int firing = 0;
+    private int speedFire = 32;
+    private int firing = 16;
     private  boolean fire = false;
 
     public RobotEnemy(float x, float y){

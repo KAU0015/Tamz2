@@ -111,9 +111,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
            }
            else{
                init();
-             /*  SharedPreferences.Editor preferencesEditor = preferences.edit();
-               preferencesEditor.putInt("score", PlayerUI.getInstance().getScore());
-               preferencesEditor.apply();*/
+               PlayerUI.getInstance().setScore(preferences.getInt("score", PlayerUI.getInstance().getScore()));
                PlayerUI.getInstance().restart();
            }
         }
@@ -227,7 +225,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        SoundHandler.getInstance().playMenu();
+      //  SoundHandler.getInstance().playMenu();
     }
 }
 
