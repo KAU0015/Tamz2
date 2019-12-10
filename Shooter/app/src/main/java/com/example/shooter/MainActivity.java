@@ -90,11 +90,12 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+        SoundHandler.getInstance().stopMenu();
     }
 
     @Override
-    public void onPause(){
-        super.onPause();
+    public void onDestroy(){
+        super.onDestroy();
         SoundHandler.getInstance().stopMenu();
     }
 

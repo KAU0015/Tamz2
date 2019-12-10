@@ -14,11 +14,11 @@ public class SoundHandler {
 
     private static final int MAX_STREAMS = 5;
     private SoundPool soundPool;
-    private int pistol, aidKit, ammo, startGame, scream, enemyPistol, hail, dance, bar;
+    private int pistol, aidKit, ammo, startGame, scream, enemyPistol, hail, dance, better, nextLevel;
     private  Context context;
     private int menuStreamID;
     private AudioManager audioManager;
-    private  boolean loaded = false;
+    private  boolean menuPlayed = false;
     private MediaPlayer mediaPlayer;
     private int volume = 1;
 
@@ -36,13 +36,14 @@ public class SoundHandler {
 
     public void loadSounds(){
         this.pistol = this.soundPool.load(context, R.raw.pistol,1);
-        this.ammo = this.soundPool.load(context, R.raw.hail,1);
+        this.nextLevel = this.soundPool.load(context, R.raw.hail,1);
         this.startGame = this.soundPool.load(context, R.raw.hell,1);
-        this.aidKit = this.soundPool.load(context, R.raw.needed,1);
+        this.ammo = this.soundPool.load(context, R.raw.needed,1);
         this.scream = this.soundPool.load(context, R.raw.scream,1);
         this.enemyPistol = this.soundPool.load(context, R.raw.enemypistol,1);
         this.hail = this.soundPool.load(context, R.raw.hail,1);
         this.dance = this.soundPool.load(context, R.raw.dance,1);
+        this.aidKit = this.soundPool.load(context, R.raw.better,1);
     }
 
     public void gunFire(){
@@ -77,6 +78,7 @@ public class SoundHandler {
         this.soundPool.play(this.dance,volume*2f, volume*2f, 1, 0, 1f);
     }
 
+    public void nextLevel(){this.soundPool.play(this.nextLevel,volume, volume, 1, 0, 1f);}
 
     public void playBar(){
         mediaPlayer = MediaPlayer.create(context, R.raw.bar);
@@ -90,14 +92,20 @@ public class SoundHandler {
     }
 
     public void playMenu(){
-        mediaPlayer = MediaPlayer.create(context, R.raw.menu);
-        mediaPlayer.setVolume(volume*0.5f, volume*0.5f);
-        mediaPlayer.start();
-        mediaPlayer.setLooping(true);
+        if(!menuPlayed){
+            mediaPlayer = MediaPlayer.create(context, R.raw.menu);
+            mediaPlayer.setVolume(volume*0.5f, volume*0.5f);
+            mediaPlayer.start();
+            mediaPlayer.setLooping(true);
+            menuPlayed = true;
+        }
     }
 
     public void stopMenu(){
         mediaPlayer.stop();
+        menuPlayed = false;
     }
+
+
 
 }

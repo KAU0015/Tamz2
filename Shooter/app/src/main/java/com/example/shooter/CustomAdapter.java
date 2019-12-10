@@ -46,8 +46,14 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup parent) {
         view = infliter.inflate(R.layout.list_item, null);
-        TextView v = view.findViewById(R.id.score_item);
-        v.setText((i+1) + ".     " + players.get(i).getName() + "     " + players.get(i).getScore());
+        TextView position = view.findViewById(R.id.position);
+        position.setText(i+1 + ".");
+
+        TextView name = view.findViewById(R.id.name);
+        name.setText(players.get(i).getName());
+
+        TextView score = view.findViewById(R.id.score);
+        score.setText(players.get(i).getScore() + "");
         return view;
     }
 }

@@ -39,7 +39,7 @@
         android:layout_height="57dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name:"
+        android:text=""
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintEnd_toEndOf="parent"

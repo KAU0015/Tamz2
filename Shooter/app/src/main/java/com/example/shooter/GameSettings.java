@@ -38,10 +38,15 @@ public class GameSettings {
     public void setSound(boolean sound) {
 
         this.sound = sound;
-        if(sound)
+        if(sound){
             SoundHandler.getInstance().setVolume(1);
-        else
+            SoundHandler.getInstance().playMenu();
+        }
+        else{
             SoundHandler.getInstance().setVolume(0);
+            SoundHandler.getInstance().stopMenu();
+        }
+
     }
 
     public String getStrDifficulty() {
